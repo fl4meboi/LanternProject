@@ -9,7 +9,8 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"Engine"
+				"Engine",
+				"UMG"
 			]
 		}
 	],
@@ -31,6 +32,19 @@
 		},
 		{
 			"Name": "SunPosition",
+			"Enabled": true
+		},
+		{
+			"Name": "MQTT",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Mac",
+				"Linux"
+			]
+		},
+		{
+			"Name": "HttpBlueprint",
 			"Enabled": true
 		}
 	]

@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+Content/Resources filter=lfs diff=lfs merge=lfs -text
+Content/Collections filter=lfs diff=lfs merge=lfs -text
+Content/Developers filter=lfs diff=lfs merge=lfs -text
+Content/KDJ filter=lfs diff=lfs merge=lfs -text
