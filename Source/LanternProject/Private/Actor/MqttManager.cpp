@@ -370,7 +370,7 @@ void AMqttManager::OnCallbackResponseReceived(FHttpRequestPtr Request, FHttpResp
 	{
 		FString Content = UTF8_TO_TCHAR(Request->GetContent().GetData());
 
-		GameInstance->LogToFile(LOGTEXT(TEXT("Callback Http Request was failed\nRequest:%s\nResponse:%s"), *Content, *Response->GetContentAsString());
+		GameInstance->LogToFile(LOGTEXT(TEXT("Callback Http Request was failed\nRequest:%s\nResponse:%s"), *Content, *Response->GetContentAsString()));
 		return;
 	}
 
@@ -440,7 +440,7 @@ UTexture2D* AMqttManager::Base64ToTexture2D(const FString& Base64String, const F
 	// 이미지 데이터로 텍스쳐 채우기
 	FTexture2DMipMap& Mip = Texture->GetPlatformData()->Mips[0];
 	void* Data = Mip.BulkData.Lock(LOCK_READ_WRITE);
-	FMemory::Memcpy(data(, UncompressedData.GetData(), UncompressedData.Num()));
+	FMemory::Memcpy(Data, UncompressedData.GetData(), UncompressedData.Num());
 	Mip.BulkData.Unlock();
 
 	// 텍스쳐 설정 업데이트
@@ -455,7 +455,7 @@ bool AMqttManager::HasMessage() const
 	return (bIsLoading == false) && (MqttMessageArray.Num() > 0);
 }
 
-void AMqttManager::RequestBalloonData()
+void AMqttManager::RequestLanternData()
 {
 	FScopeLock Lock(&DataGuard);
 
@@ -472,6 +472,7 @@ void AMqttManager::RequestBalloonData()
 	{
 		LanternManager->SpawnLantern(nullptr, Text);
 
+		GameInstance->LogToFile(LOGTEXT(TEXT("Mqtt requested to spawn lantern with text")));
 		GameInstance->LogToFile(LOGTEXT(TEXT("Mqtt requested to spawn lantern with text")));
 	}
 }

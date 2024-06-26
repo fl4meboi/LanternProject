@@ -5,6 +5,7 @@
 
 #include "Blueprint/UserWidget.h"
 #include "Engine/TextureRenderTarget2D.h"
+#include "SaveGame/LanternSaveGame.h"
 #include "Slate/WidgetRenderer.h"
 
 // Sets default values
@@ -221,30 +222,33 @@ int32 ALanternActor::GetLanternArrayIndex() const
 
 void ALanternActor::SaveData(FLanternData& LanternData)
 {
-	// UMaterialInstanceDynamic* Material = Cast<UMaterialInstanceDynamic>(BlankMeshComponent->GetMaterial(0));
-	// FHashedMaterialParameterInfo Info(FName("Texture"));
-	// UTexture* OutTexture;
-	// // if (Material->GetTextureParameterValue(Info, OutTexture))
-	// // {
-	// // 	if (UTexture2D* Texture = Cast<UTexture2D>(OutTexture))
-	// // 	{
-	// // 		FTexture2DMipMap& Mip = Texture->GetPlatformData()->Mips[0];
-	// // 		LanternData.TextureSize.X = Mip.SizeX;
-	// // 		LanternData.TextureSize.Y = Mip.SizeY;
-	// // 		int32 DataLength = LanternData.TextureSize.X * LanternData.TextureSize.Y * 4;	// Assume RGBA format
-	// // 		LanternData.TextureColors.AddUninitialized(DataLength);
-	// //
-	// // 		const uint8* MipDataPtr = static_cast<const uint8*>(Mip.BulkData.LockReadOnly());
-	// // 		FMemory::Memcpy(LanternData.TextureColors.GetData(), MipDataPtr, DataLength);
-	// // 		Mip.BulkData.Unlock();
-	// // 	}
-	// // }
-	// //
-	// // for (ALanternActor* Lantern : NeighborArray)
-	// // {
-	// // 	LanternData.OverlappedLanternIndexArray.Add(Lantern->GetLanternArrayIndex());
-	// // }
-	// //
-	// // LanternData.
+	UMaterialInstanceDynamic* Material = Cast<UMaterialInstanceDynamic>(BlankMeshComponent->GetMaterial(0));
+	FHashedMaterialParameterInfo Info(FName("Texture"));
+	UTexture* OutTexture;
+	if (Material->GetTextureParameterValue(Info, OutTexture))
+	{
+		if (UTexture2D* Texture = Cast<UTexture2D>(OutTexture))
+		{
+			FTexture2DMipMap& Mip = Texture->GetPlatformData()->Mips[0];
+			LanternData.TextureSize.X = Mip.SizeX;
+			LanternData.TextureSize.Y = Mip.SizeY;
+			int32 DataLength = LanternData.TextureSize.X * LanternData.TextureSize.Y * 4;	// Assume RGBA format
+			LanternData.TextureColors.AddUninitialized(DataLength);
+	
+			const uint8* MipDataPtr = static_cast<const uint8*>(Mip.BulkData.LockReadOnly());
+			FMemory::Memcpy(LanternData.TextureColors.GetData(), MipDataPtr, DataLength);
+			Mip.BulkData.Unlock();
+		}
+	}
+	
+	for (ALanternActor* Lantern : NeighborArray)
+	{
+		LanternData.OverlappedLanternIndexArray.Add(Lantern->GetLanternArrayIndex());
+	}
+	
+	LanternData.TypeIndex = TypeIndex;
+	LanternData.VariationIndex = VariationIndex;
+	LanternData.Transform = GetActorTransform();
+	LanternData.BackDirection = BackDirection;
 }
 

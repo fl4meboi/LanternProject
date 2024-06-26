@@ -25,11 +25,13 @@ public:
 	{
 		while (true)
 		{
-			MqttClient->Connect(ServerUrl, ClientId, FString("ychahn"), FString("1"), 60, bIsSuccess, ErrorMsg);
+			// if (MqttClient->IsValidLowLevelFast() == false || MqttClient->MqttClient->is_connected()) return;
+			
+			MqttClient->Connect(ServerUrl, ClientId,FString("ychahn"), FString("1"), 60, bIsSuccess, ErrorMsg);
 
 			if (bIsSuccess)
 			{
-				AsyncTask(ENamedThreads::GameThread ,[this]()
+				AsyncTask(ENamedThreads::GameThread, [this]()
 				{
 					if (GameInstance->IsValidLowLevelFast())
 					{
@@ -45,7 +47,7 @@ public:
 					if (GameInstance->IsValidLowLevelFast())
 					{
 						GameInstance->ShowToastMessage(TEXT("연결 실패"));
-						GameInstance->LogToFile(LOGTEXT(TEXT("Failed to connect")));
+						GameInstance->LogToFile(LOGTEXT(TEXT("Failed to connect")));	
 					}
 				});
 				FPlatformProcess::Sleep(3.0f);
@@ -124,7 +126,7 @@ public:
 
 	bool HasMessage() const;
 
-	void RequestBalloonData();
+	void RequestLanternData();
 
 	TArray<uint8> FStringToUint8(const FString& InString);
 

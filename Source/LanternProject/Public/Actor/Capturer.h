@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Capturer.generated.h"
 
+class AMqttManager;
+
 UCLASS()
 class LANTERNPROJECT_API ACapturer : public AActor
 {
@@ -23,4 +25,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UTexture2D* TestCapture(AActor* Target);
+
+	UFUNCTION(BlueprintCallable)
+	void Capture(AActor* Target);
+
+	UFUNCTION(BlueprintCallable)
+	FString ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const FString& ImageFormat);
+
+private:
+	UPROPERTY()
+	AMqttManager* MqttManager;
+	UPROPERTY(EditDefaultsOnly, Meta = (AllowPrivateAccess))
+	USceneCaptureComponent2D* SceneCaptureComponent2D;
 };

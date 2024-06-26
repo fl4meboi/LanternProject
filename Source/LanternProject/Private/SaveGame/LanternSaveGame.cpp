@@ -4,6 +4,8 @@
 #include "SaveGame/LanternSaveGame.h"
 
 #include "LanternActor.h"
+#include "Actor/LanternManager.h"
+#include "Actor/MqttManager.h"
 
 void ULanternSaveGame::AddCount()
 {
@@ -32,12 +34,17 @@ void ULanternSaveGame::SaveLanternArray(const TArray<ALanternActor*>& LanternArr
 
 void ULanternSaveGame::LoadLanternArray(ALanternManager* LanternManager)
 {
+	LanternManager->LoadLantern(LanternDataArray);
+	LanternDataArray.Empty();
 }
 
 void ULanternSaveGame::SaveMqttMessageArray(const TArray<FString>& NewMqttMessageArray)
 {
+	MqttMessageArray = NewMqttMessageArray;
 }
 
 void ULanternSaveGame::LoadMqttMessageArray(AMqttManager* MqttManager)
 {
+	MqttManager->LoadMqttMessageArray(MqttMessageArray);
+	MqttMessageArray.Empty();
 }

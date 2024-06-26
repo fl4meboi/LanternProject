@@ -5,6 +5,7 @@
 
 #include "EngineUtils.h"
 #include "LanternActor.h"
+#include "Actor/Capturer.h"
 #include "Blueprint/UserWidget.h"
 #include "Actor/MqttManager.h"
 #include "SaveGame/LanternSaveGame.h"
@@ -155,7 +156,7 @@ ALanternActor* ALanternManager::JustSpawnLantern(UTexture2D* Image, FString Text
 
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	ALanternActor* Lantern = World->SpawnActor<ALanternActor>(Lantern[TypeIndex].LanternClass[VariationIndex],
+	ALanternActor* Lantern = World->SpawnActor<ALanternActor>(LanternTypeArray[TypeIndex].LanternClass[VariationIndex],
 		SpawnLocation, GetActorRotation() + FRotator(0, 180, 0), Params);
 
 	FVector BackDirection =
@@ -221,7 +222,7 @@ void ALanternManager::LoadLantern(TArray<FLanternData>& LanternDataArray)
 
 	for (auto LanternData : LanternDataArray)
 	{
-		ALanternActor* Lantern = World->SpawnActor<ALanternActor>(LanternTypeArray[LanternData.Typeindex].LanternClass[LanternData.VariationIndex],
+		ALanternActor* Lantern = World->SpawnActor<ALanternActor>(LanternTypeArray[LanternData.TypeIndex].LanternClass[LanternData.VariationIndex],
 		GetActorLocation(), GetActorRotation() + FRotator(0, 180, 0), Params);
 
 		// Todo : Load Image From Data
@@ -229,7 +230,7 @@ void ALanternManager::LoadLantern(TArray<FLanternData>& LanternDataArray)
 		NewTexture->UpdateResource();
 
 		FTexture2DMipMap& Mip = NewTexture->GetPlatformData()->Mips[0];
-		uint8* MipDataPtr = static_cast<uint8*>(Mip.BulkData.Lock(LOCK_AND_WRITE));
+		uint8* MipDataPtr = static_cast<uint8*>(Mip.BulkData.Lock(LOCK_READ_WRITE));
 		FMemory::Memcpy(MipDataPtr, LanternData.TextureColors.GetData(), LanternData.TextureSize.X * LanternData.TextureSize.Y * 4);
 
 		// 텍스쳐 리소스 갱신
