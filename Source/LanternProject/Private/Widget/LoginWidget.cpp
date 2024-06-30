@@ -3,3 +3,8 @@
 
 #include "Widget/LoginWidget.h"
 
+
+void ULoginWidget::ShowLoginErrorMessage()
+{
+	SB_Toast->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+}

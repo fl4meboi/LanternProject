@@ -23,4 +23,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void LoadSoundFile();
+
+private:
+	UPROPERTY(EditDefaultsOnly, Meta = (AllowPrivateAccess))
+	USoundBase* AmbientSound;
+	UAudioComponent* AmbientSoundComponent;
+
+	UPROPERTY()
+	USoundWave* SoundWave;
 };
