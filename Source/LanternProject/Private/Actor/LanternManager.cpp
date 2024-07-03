@@ -83,7 +83,12 @@ void ALanternManager::Tick(float DeltaTime)
 	{
 		CurrentSpawnCoolDown -= DeltaTime;
 
+		UE_LOG(LogTemp, Warning, TEXT("SpawnCoolTime set"));
 		return;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SpawnCoolTime not set"));
 	}
 
 	if (MqttManager && MqttManager->HasMessage())
