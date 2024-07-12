@@ -166,7 +166,7 @@ ALanternActor* ALanternManager::JustSpawnLantern(UTexture2D* Image, FString Text
 
 	FVector BackDirection =
 	TargetLocation +
-		(GetActorRightVector() * WidthLimit * FMath::RandRange(-1.f, -1.f)) +
+		(GetActorRightVector() * WidthLimit * FMath::RandRange(-1.f, 1.f)) +
 		(GetActorUpVector() * HeightLimit * FMath::RandRange(-1.f, 1.f));
 
 	Lantern->Init(TextureFromWidget(LanternTypeArray[TypeIndex].LanternWidget, WidgetSize), BackDirection.GetSafeNormal(), TypeIndex, VariationIndex);
