@@ -16,22 +16,32 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 	else
 	{
 		// Modify newline character
+		// FString NewText = Text.Replace(TEXT("\\n"), TEXT("\n"));
+		// if (Texture == nullptr)
+		// {
+		// 	// Only Text : Index 1
+		//
+		// 	WidgetSwitcher->SetActiveWidgetIndex(1);
+		// 	TB_Text2->SetText(FText::FromString(NewText.Left(42)));
+		// }
+		// else if (Text.IsEmpty())
+		// {
+		// 	// Only Image : Index 2
+		//
+		// 	WidgetSwitcher->SetActiveWidgetIndex(2);
+		// 	Img_Image2->SetBrushFromTexture(Texture);
+		// }
+		// else
+		// {
+		// 	// Image + Text : Index 0
+		//
+		// 	WidgetSwitcher->SetActiveWidgetIndex(0);
+		// 	Img_Image->SetBrushFromTexture(Texture);
+		// 	TB_Text->SetText(FText::FromString(NewText.Left(25)));
+		// }
+
 		FString NewText = Text.Replace(TEXT("\\n"), TEXT("\n"));
 		if (Texture == nullptr)
-		{
-			// Only Text : Index 1
-
-			WidgetSwitcher->SetActiveWidgetIndex(1);
-			TB_Text2->SetText(FText::FromString(NewText.Left(42)));
-		}
-		else if (Text.IsEmpty())
-		{
-			// Only Image : Index 2
-
-			WidgetSwitcher->SetActiveWidgetIndex(2);
-			Img_Image2->SetBrushFromTexture(Texture);
-		}
-		else
 		{
 			// Image + Text : Index 0
 
@@ -41,7 +51,6 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 		}
 	}
 }
-
 void ULanternWidget::Randomize(int32 Type)
 {
 	if (Type == -1)

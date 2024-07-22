@@ -27,12 +27,12 @@ public:
 private:
 	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
 	UImage* Img_Image;
-	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
-	UImage* Img_Image2;
+	// UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
+	// UImage* Img_Image2;
 	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
 	UTextBlock* TB_Text;
-	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
-	UTextBlock* TB_Text2;
+	// UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
+	// UTextBlock* TB_Text2;
 	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
 	UScaleBox* ScaleBox;
 	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
