@@ -59,13 +59,13 @@ void ULanternWidget::Randomize(int32 Type)
 
 void ULanternWidget::HideWidget()
 {
-	// PlayAnimation(HideWidgetAnim);
+	PlayAnimation(HideWidgetAnim);
 
-	if (TB_Text)
-	{
-		FTimerHandle TimerHandle;
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ULanternWidget::HideText, 2.0f, false);
-	}
+	// if (TB_Text)
+	// {
+	// 	FTimerHandle TimerHandle;
+	// 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ULanternWidget::HideText, 2.0f, false);
+	// }
 }
 
 void ULanternWidget::HideText()

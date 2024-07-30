@@ -173,10 +173,6 @@ ALanternActor* ALanternManager::JustSpawnLantern(UTexture2D* Image, FString Text
 	Lantern->Init(TextureFromWidget(LanternTypeArray[TypeIndex].LanternWidget, WidgetSize), BackDirection.GetSafeNormal(), TypeIndex, VariationIndex);
 	Lantern->SetData(CameraLocation, SpawnLocation, GetActorLocation() + TargetLocation, WidthLimit, HeightLimit, Distance);
 	Lantern->SetLanternSpeed(BackSpeed, UpSpeed, SideSpeed);
-
-	// // Hide LanternWidget
-	// LanternWidget->HideWidget();
-	// UE_LOG(LogTemp, Warning, TEXT("HideWidget"));
 	
 	// ULanternWidget* LanternWidget = Cast<ULanternWidget>()
 	// if (LanternWidget)
@@ -207,6 +203,10 @@ void ALanternManager::SpawnLantern(UTexture2D* Image, FString Text)
 		LanternArray.Add(Lantern);
 
 		Capturer->Capture(Lantern);
+		
+		// // Hide LanternWidget
+		// LanternWidget->HideWidget();
+		// UE_LOG(LogTemp, Warning, TEXT("HideWidget"));
 
 		if (LanternSpawnSound)
 		{
