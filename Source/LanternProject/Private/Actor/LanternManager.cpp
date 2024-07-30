@@ -15,6 +15,7 @@
 #include "LanternProject/LanternProject.h"
 #include "Slate/WidgetRenderer.h"
 #include "Widget/LanternWidget.h"
+#include "TimerManager.h"
 
 // Sets default values
 ALanternManager::ALanternManager()
@@ -83,12 +84,12 @@ void ALanternManager::Tick(float DeltaTime)
 	{
 		CurrentSpawnCoolDown -= DeltaTime;
 
-		UE_LOG(LogTemp, Warning, TEXT("SpawnCoolTime set"));
+		// UE_LOG(LogTemp, Warning, TEXT("SpawnCoolTime set"));
 		return;
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("SpawnCoolTime not set"));
+		// UE_LOG(LogTemp, Warning, TEXT("SpawnCoolTime not set"));
 	}
 
 	if (MqttManager && MqttManager->HasMessage())
@@ -172,6 +173,23 @@ ALanternActor* ALanternManager::JustSpawnLantern(UTexture2D* Image, FString Text
 	Lantern->Init(TextureFromWidget(LanternTypeArray[TypeIndex].LanternWidget, WidgetSize), BackDirection.GetSafeNormal(), TypeIndex, VariationIndex);
 	Lantern->SetData(CameraLocation, SpawnLocation, GetActorLocation() + TargetLocation, WidthLimit, HeightLimit, Distance);
 	Lantern->SetLanternSpeed(BackSpeed, UpSpeed, SideSpeed);
+
+	// // Hide LanternWidget
+	// LanternWidget->HideWidget();
+	// UE_LOG(LogTemp, Warning, TEXT("HideWidget"));
+	
+	// ULanternWidget* LanternWidget = Cast<ULanternWidget>()
+	// if (LanternWidget)
+	// {
+	// 	FTimerHandle UnusedHandle;
+	// 	GetWorld()->GetTimerManager().SetTimer(UnusedHandle, [LanternWidget]()
+	// 	{
+	// 		if (LanternWidget)
+	// 		{
+	// 			LanternWidget->HideWidget();
+	// 		}
+	// 	}, DisplayDuration, false);
+	// }
 
 	return Lantern;
 }

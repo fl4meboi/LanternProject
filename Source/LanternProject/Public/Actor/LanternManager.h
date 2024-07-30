@@ -112,6 +112,11 @@ private:
 	UPROPERTY(EditDefaultsOnly, Meta = (AllowPrivateAccess))
 	FVector2D WidgetSize = {2048, 2048};
 
+	UPROPERTY(EditAnywhere, Category = "Lantern")
+	ULanternWidget* LanternWidget;
+	UPROPERTY(EditAnywhere, Category = "Lantern")
+	float DisplayDuration = 1.0f;
+
 	// Sound
 	UPROPERTY(EditDefaultsOnly, Meta = (AllowPrivateAccess))
 	USoundBase* LanternSpawnSound;

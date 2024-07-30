@@ -24,6 +24,10 @@ public:
 
 	void Randomize(int32 Type = -1);
 
+	void HideWidget();
+
+	void HideText();
+
 private:
 	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
 	UImage* Img_Image;
@@ -37,4 +41,10 @@ private:
 	UScaleBox* ScaleBox;
 	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
 	UWidgetSwitcher* WidgetSwitcher;
+	
+	UPROPERTY(Transient, Meta = (BindWidgetAnim))
+	UWidgetAnimation* HideWidgetAnim;
+
+	// UPROPERTY(EditAnywhere, Category = "Lantern")
+	// float ShowDuration = 1.0f;
 };
