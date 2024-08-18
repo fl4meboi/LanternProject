@@ -291,5 +291,5 @@ void ULanternGameInstance::ShowToastMessage(const FString& Message)
 void ULanternGameInstance::InitFilePath()
 {
 	FilePath = FPlatformProcess::UserDir();
-	FilePath += TEXT("MRAG/Interactive/LanternProject/");
+	FilePath += TEXT("MRAG/Interactive/Lantern/");
 }

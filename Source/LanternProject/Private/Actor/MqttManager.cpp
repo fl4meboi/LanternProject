@@ -178,7 +178,7 @@ bool AMqttManager::CheckIsLanternData(const FString& Message)
 	TSharedPtr<FJsonObject> DataObject = MessageObject->GetObjectField(TEXT("data"));
 	if (DataObject.IsValid())
 	{
-		TSharedPtr<FJsonObject> HeadObject = DataObject->GetObjectField(TEXT("data"));
+		TSharedPtr<FJsonObject> HeadObject = DataObject->GetObjectField(TEXT("head"));
 		if (HeadObject.IsValid())
 		{
 			if (HeadObject->GetStringField(TEXT("apicommand")).Compare(TEXT("content")) != 0
