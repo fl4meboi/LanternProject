@@ -173,19 +173,6 @@ ALanternActor* ALanternManager::JustSpawnLantern(UTexture2D* Image, FString Text
 	Lantern->Init(TextureFromWidget(LanternTypeArray[TypeIndex].LanternWidget, WidgetSize), BackDirection.GetSafeNormal(), TypeIndex, VariationIndex);
 	Lantern->SetData(CameraLocation, SpawnLocation, GetActorLocation() + TargetLocation, WidthLimit, HeightLimit, Distance);
 	Lantern->SetLanternSpeed(BackSpeed, UpSpeed, SideSpeed);
-	
-	// ULanternWidget* LanternWidget = Cast<ULanternWidget>()
-	// if (LanternWidget)
-	// {
-	// 	FTimerHandle UnusedHandle;
-	// 	GetWorld()->GetTimerManager().SetTimer(UnusedHandle, [LanternWidget]()
-	// 	{
-	// 		if (LanternWidget)
-	// 		{
-	// 			LanternWidget->HideWidget();
-	// 		}
-	// 	}, DisplayDuration, false);
-	// }
 
 	return Lantern;
 }
@@ -203,11 +190,7 @@ void ALanternManager::SpawnLantern(UTexture2D* Image, FString Text)
 		LanternArray.Add(Lantern);
 
 		Capturer->Capture(Lantern);
-		
-		// // Hide LanternWidget
-		// LanternWidget->HideWidget();
-		// UE_LOG(LogTemp, Warning, TEXT("HideWidget"));
-
+	
 		if (LanternSpawnSound)
 		{
 			UGameplayStatics::PlaySound2D(GetWorld(), LanternSpawnSound);

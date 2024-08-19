@@ -473,7 +473,6 @@ void AMqttManager::RequestLanternData()
 		LanternManager->SpawnLantern(nullptr, Text);
 
 		GameInstance->LogToFile(LOGTEXT(TEXT("Mqtt requested to spawn lantern with text")));
-		GameInstance->LogToFile(LOGTEXT(TEXT("Mqtt requested to spawn lantern with text")));
 	}
 }
 

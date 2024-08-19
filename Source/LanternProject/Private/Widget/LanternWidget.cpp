@@ -13,6 +13,7 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 	if (nullptr == Texture && Text.IsEmpty())
 	{
 		Randomize();
+		UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-Randomize"));
 	}
 	else
 	{
@@ -23,7 +24,9 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 
 			WidgetSwitcher->SetActiveWidgetIndex(0);
 			Img_Image->SetBrushFromTexture(Texture);
-			TB_Text->SetText(FText::FromString(NewText.Left(25)));
+			TB_Text->SetText(FText::FromString(NewText.Left(10)));
+
+			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-SetActiveWidget"));
 
 			// HideWidget();
 			// UE_LOG(LogTemp, Warning, TEXT("HideWidget"));
@@ -70,7 +73,7 @@ void ULanternWidget::HideWidget()
 
 void ULanternWidget::HideText()
 {
-	TB_Text->SetVisibility(ESlateVisibility::Hidden);
-	UE_LOG(LogTemp, Warning, TEXT("LanternWidget::HideWidget"));
+	// TB_Text->SetVisibility(ESlateVisibility::Hidden);
+	// UE_LOG(LogTemp, Warning, TEXT("LanternWidget::HideWidget"));
 }
 
