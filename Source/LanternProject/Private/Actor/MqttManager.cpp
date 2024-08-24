@@ -456,7 +456,7 @@ bool AMqttManager::HasMessage() const
 }
 
 void AMqttManager::RequestLanternData()
-{
+{	
 	FScopeLock Lock(&DataGuard);
 
 	FString CurrentMessage = MqttMessageArray[0];
@@ -465,7 +465,7 @@ void AMqttManager::RequestLanternData()
 	ParseMessage(CurrentMessage);
 
 	if (ImageURL.IsEmpty() == false)
-	{
+	{	
 		RequestHTTP(ImageURL);
 	}
 	else
