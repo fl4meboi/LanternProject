@@ -72,14 +72,18 @@ FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const
 		return FString();
 	}
 
+	// TArray64<uint8> OutArray;
+	// FImageUtils::GetRawData(Texture, OutArray);
+	// return FBase64::Encode(OutArray.GetData(), OutArray.Num());
+	
 	FImage Image;
-	FImageUtils::GetRenderTargetImage(Texture, Image);
-	TArray64<uint8> CompressData;
-	FImageUtils::CompressImage(CompressData, *ImageFormat, Image);
+	FImageUtils::GetRenderTargetImage(Texture,Image);
+	TArray64<uint8> CompressedData;
+	FImageUtils::CompressImage(CompressedData,*ImageFormat,Image);
 
-	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this, CompressData, ImageFormat]()
+	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this, CompressedData, ImageFormat]()
 	{
-		if (ULanternGameInstance* GameInstance = GetGameInstance<ULanternGameInstance>())
+		if (ULanternGameInstance* GameInstasnce =  GetGameInstance<ULanternGameInstance>())
 		{
 			IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 
@@ -96,18 +100,21 @@ FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const
 				FolderName += TEXT("0");
 			}
 			FolderName += FString::FromInt(Now.GetDay());
+		
+			// UE_LOG(LogTemp, Warning, TEXT("ACapturer::ConvertTextureToBase64) %s"), *);
+		
+			FString ImagePath = GameInstasnce->GetFilePath() + TEXT("Screenshots/") + FolderName + TEXT("/");
 
-			FString ImagePath = GameInstance->GetFilePath() + TEXT("Screenshots/") + FolderName + TEXT("/");
-			// Check directory
+			// Check Directory
 			PlatformFile.CreateDirectoryTree(*ImagePath);
-
+		
 			FString ImageName = MqttManager->GetPId() + TEXT(".") + ImageFormat;
-
-			FFileHelper::SaveArrayToFile(CompressData, *(ImagePath + ImageName));
+		
+			FFileHelper::SaveArrayToFile(CompressedData, *(ImagePath + ImageName));
 		}
 	});
 
-	FString Base64EncodeData = FBase64::Encode(CompressData.GetData(), CompressData.Num());
+	FString Base64EncodeData = FBase64::Encode(CompressedData.GetData(), CompressedData.Num());
 
 	return Base64EncodeData;
 }

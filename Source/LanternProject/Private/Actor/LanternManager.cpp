@@ -159,6 +159,7 @@ ALanternActor* ALanternManager::JustSpawnLantern(UTexture2D* Image, FString Text
 	int32 VariationIndex = FMath::RandRange(0, LanternTypeArray[TypeIndex].LanternClass.Num() - 1);
 
 	LanternTypeArray[TypeIndex].LanternWidget->InitWidget(Image, Text);
+	GameInstance->LogToFile(LOGTEXT(TEXT("LanternManager::JustSpawnLantern->InitWidget")));		// Call InitWidget 
 
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;

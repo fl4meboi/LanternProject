@@ -6,7 +6,9 @@
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Components/WidgetSwitcher.h"
+// #include "GameInstance/LanternGameInstance.h"
 #include "TimerManager.h"
+// #include "LanternProject/LanternProject.h"
 
 void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 {
@@ -14,6 +16,7 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 	{
 		Randomize();
 		UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-Randomize"));
+		// GameInstance->LogToFile(LOGTEXT(TEXT("LanternWidget::InitWidget->Randomize")));
 	}
 	else
 	{
@@ -27,6 +30,7 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 			TB_Text->SetText(FText::FromString(NewText.Left(10)));
 
 			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-SetActiveWidget"));
+			// GameInstance->LogToFile(LOGTEXT(TEXT("LanternWidget::InitWidget->SetActiveWidget")));
 
 			// HideWidget();
 			// UE_LOG(LogTemp, Warning, TEXT("HideWidget"));
