@@ -191,6 +191,7 @@ void ALanternManager::SpawnLantern(UTexture2D* Image, FString Text)
 		LanternArray.Add(Lantern);
 
 		Capturer->Capture(Lantern);
+		GameInstance->LogToFile(LOGTEXT(TEXT("LanternManager->Capture")));
 	
 		if (LanternSpawnSound)
 		{
@@ -198,7 +199,7 @@ void ALanternManager::SpawnLantern(UTexture2D* Image, FString Text)
 		}
 	}
 
-	GameInstance->LogToFile(LOGTEXT(TEXT("Lantern successfully spawned")));
+	// GameInstance->LogToFile(LOGTEXT(TEXT("Lantern successfully spawned")));
 
 	bIsSpawning = false;
 }

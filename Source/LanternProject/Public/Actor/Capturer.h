@@ -39,4 +39,7 @@ private:
 	AMqttManager* MqttManager;
 	UPROPERTY(EditDefaultsOnly, Meta = (AllowPrivateAccess))
 	USceneCaptureComponent2D* SceneCaptureComponent2D;
+
+	UPROPERTY()
+	class ULanternGameInstance* GameInstance;
 };

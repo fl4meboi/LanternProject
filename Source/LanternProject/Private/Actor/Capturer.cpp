@@ -6,6 +6,7 @@
 #include "EngineUtils.h"
 #include "ImageUtils.h"
 #include "Actor/MqttManager.h"
+#include "GameInstance/LanternGameInstance.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "Compression/OodleDataCompressionUtil.h"
 #include "Engine/TextureRenderTarget2D.h"
@@ -30,6 +31,9 @@ void ACapturer::BeginPlay()
 	TActorIterator<AMqttManager> It(GetWorld());
 	MqttManager = *It;
 	check(MqttManager);
+	
+	// UE_LOG(LogTemp, Warning, TEXT("Capturer called"));
+	GameInstance->LogToFile(LOGTEXT(TEXT("Capturer called")));
 }
 
 // Called every frame
@@ -45,10 +49,13 @@ UTexture2D* ACapturer::TestCapture_Implementation(AActor* Target)
 	SceneCaptureComponent2D->CaptureScene();
 	SceneCaptureComponent2D->ShowOnlyActors.Remove(Target);
 	FString Base64 = ConvertTextureToBase64(SceneCaptureComponent2D->TextureTarget, TEXT("jpeg"));
+	// UE_LOG(LogTemp, Warning, TEXT("Capture jpeg"));
 
 	TActorIterator<AMqttManager> It(GetWorld());
 
 	return (*It)->Base64ToTexture2D(Base64, TEXT("JPG"));
+
+	GameInstance->LogToFile(LOGTEXT(TEXT("Test Capture implemented")));
 }
 
 void ACapturer::Capture(AActor* Target)
@@ -60,9 +67,11 @@ void ACapturer::Capture(AActor* Target)
 	SceneCaptureComponent2D->CaptureScene();
 	SceneCaptureComponent2D->ShowOnlyActors.Remove(Target);
 	FString Base64 = ConvertTextureToBase64(SceneCaptureComponent2D->TextureTarget, ImageFormat);
+	// UE_LOG(LogTemp, Warning, TEXT("Capturer jpg"));
 
 	MqttManager->CallbackHTTP(Base64, ImageFormat);
-	
+
+	GameInstance->LogToFile(LOGTEXT(TEXT("Test Capture implemented")));	
 }
 
 FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const FString& ImageFormat)
