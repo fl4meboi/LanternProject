@@ -21,20 +21,19 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 	else
 	{
 		FString NewText = Text.Replace(TEXT("\\n"), TEXT("\n"));
-		if (Texture == nullptr)
-		{
-			// Image + Text : Index 0
 
-			WidgetSwitcher->SetActiveWidgetIndex(0);
-			Img_Image->SetBrushFromTexture(Texture);
-			TB_Text->SetText(FText::FromString(NewText.Left(10)));
+		// Image + Text : Index 0
 
-			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-SetActiveWidget"));
-			// GameInstance->LogToFile(LOGTEXT(TEXT("LanternWidget::InitWidget->SetActiveWidget")));
+		WidgetSwitcher->SetActiveWidgetIndex(0);
+		Img_Image->SetBrushFromTexture(Texture);
+		TB_Text->SetText(FText::FromString(NewText.Left(10)));
 
-			// HideWidget();
-			// UE_LOG(LogTemp, Warning, TEXT("HideWidget"));
-		}
+		UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-SetActiveWidget"));
+		// GameInstance->LogToFile(LOGTEXT(TEXT("LanternWidget::InitWidget->SetActiveWidget")));
+		
+		// if (Texture == nullptr)
+		// {
+		// }
 	}
 }
 

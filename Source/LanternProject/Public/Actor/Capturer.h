@@ -34,12 +34,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FString ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const FString& ImageFormat);
 
+	// UPROPERTY()
+	// class ULanternGameInstance* GameInstance;
+
 private:
 	UPROPERTY()
 	AMqttManager* MqttManager;
 	UPROPERTY(EditDefaultsOnly, Meta = (AllowPrivateAccess))
 	USceneCaptureComponent2D* SceneCaptureComponent2D;
 
-	UPROPERTY()
-	class ULanternGameInstance* GameInstance;
 };

@@ -33,7 +33,7 @@ void ACapturer::BeginPlay()
 	check(MqttManager);
 	
 	// UE_LOG(LogTemp, Warning, TEXT("Capturer called"));
-	GameInstance->LogToFile(LOGTEXT(TEXT("Capturer called")));
+	// GameInstance->LogToFile(LOGTEXT(TEXT("Capturer called")));
 }
 
 // Called every frame
@@ -49,13 +49,13 @@ UTexture2D* ACapturer::TestCapture_Implementation(AActor* Target)
 	SceneCaptureComponent2D->CaptureScene();
 	SceneCaptureComponent2D->ShowOnlyActors.Remove(Target);
 	FString Base64 = ConvertTextureToBase64(SceneCaptureComponent2D->TextureTarget, TEXT("jpeg"));
-	// UE_LOG(LogTemp, Warning, TEXT("Capture jpeg"));
 
 	TActorIterator<AMqttManager> It(GetWorld());
 
-	return (*It)->Base64ToTexture2D(Base64, TEXT("JPG"));
+	UE_LOG(LogTemp, Warning, TEXT("Capture jpeg"));
+	// GameInstance->LogToFile(LOGTEXT(TEXT("Test Capture implemented")));
 
-	GameInstance->LogToFile(LOGTEXT(TEXT("Test Capture implemented")));
+	return (*It)->Base64ToTexture2D(Base64, TEXT("JPG"));
 }
 
 void ACapturer::Capture(AActor* Target)
@@ -67,11 +67,11 @@ void ACapturer::Capture(AActor* Target)
 	SceneCaptureComponent2D->CaptureScene();
 	SceneCaptureComponent2D->ShowOnlyActors.Remove(Target);
 	FString Base64 = ConvertTextureToBase64(SceneCaptureComponent2D->TextureTarget, ImageFormat);
-	// UE_LOG(LogTemp, Warning, TEXT("Capturer jpg"));
+	UE_LOG(LogTemp, Warning, TEXT("Capturer jpg"));
 
 	MqttManager->CallbackHTTP(Base64, ImageFormat);
 
-	GameInstance->LogToFile(LOGTEXT(TEXT("Test Capture implemented")));	
+	// GameInstance->LogToFile(LOGTEXT(TEXT("Test Capture implemented")));	
 }
 
 FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const FString& ImageFormat)
@@ -92,7 +92,7 @@ FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const
 
 	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this, CompressedData, ImageFormat]()
 	{
-		if (ULanternGameInstance* GameInstasnce =  GetGameInstance<ULanternGameInstance>())
+		if (ULanternGameInstance* GameInstance =  GetGameInstance<ULanternGameInstance>())
 		{
 			IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 
@@ -112,7 +112,7 @@ FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const
 		
 			// UE_LOG(LogTemp, Warning, TEXT("ACapturer::ConvertTextureToBase64) %s"), *);
 		
-			FString ImagePath = GameInstasnce->GetFilePath() + TEXT("Screenshots/") + FolderName + TEXT("/");
+			FString ImagePath = GameInstance->GetFilePath() + TEXT("Screenshots/") + FolderName + TEXT("/");
 
 			// Check Directory
 			PlatformFile.CreateDirectoryTree(*ImagePath);
