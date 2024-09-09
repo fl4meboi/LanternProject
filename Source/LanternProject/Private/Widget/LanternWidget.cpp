@@ -22,15 +22,30 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 	{
 		FString NewText = Text.Replace(TEXT("\\n"), TEXT("\n"));
 
-		// Image + Text : Index 0
+		if (NewText.Len() > 9)
+		{
+			// Text + Text : Index 1
 
-		WidgetSwitcher->SetActiveWidgetIndex(0);
-		Img_Image->SetBrushFromTexture(Texture);
-		TB_Text->SetText(FText::FromString(NewText.Left(10)));
+			FString FirstPart = NewText.Left(8);
+			FString RemainingPart = NewText.Mid(8);
 
-		UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-SetActiveWidget"));
-		// GameInstance->LogToFile(LOGTEXT(TEXT("LanternWidget::InitWidget->SetActiveWidget")));
-		
+			WidgetSwitcher->SetActiveWidgetIndex(1);
+			TB_Text_1->SetText(FText::FromString(FirstPart));
+			TB_Text_2->SetText(FText::FromString(RemainingPart));
+
+			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-Over_8_Char"));
+		}
+		else
+		{
+			// Image + Text : Index 0
+
+			WidgetSwitcher->SetActiveWidgetIndex(0);
+			Img_Image->SetBrushFromTexture(Texture);
+			TB_Text->SetText(FText::FromString(NewText.Left(8)));
+
+			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-Under_8_Char"));
+		}
+
 		// if (Texture == nullptr)
 		// {
 		// }
@@ -41,7 +56,7 @@ void ULanternWidget::Randomize(int32 Type)
 {
 	if (Type == -1)
 	{
-		Type = FMath::RandRange(0, 2);
+		Type = FMath::RandRange(0, 1);
 	}
 
 	switch(Type)
@@ -51,15 +66,15 @@ void ULanternWidget::Randomize(int32 Type)
 		WidgetSwitcher->SetActiveWidgetIndex(0);
 		break;
 		
-		// Text Only
+		// Text + Text
 	case 1:
 		WidgetSwitcher->SetActiveWidgetIndex(1);
 		break;
 
-		// Image Only
+	/*	// Image Only
 	case 2:
 		WidgetSwitcher->SetActiveWidgetIndex(2);
-		break;
+		break;*/
 	}
 }
 

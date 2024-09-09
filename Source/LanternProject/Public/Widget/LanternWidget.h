@@ -35,6 +35,10 @@ private:
 	// UImage* Img_Image2;
 	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
 	UTextBlock* TB_Text;
+	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
+	UTextBlock* TB_Text_1;
+	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
+	UTextBlock* TB_Text_2;
 	// UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
 	// UTextBlock* TB_Text2;
 	UPROPERTY(BlueprintReadOnly, Meta = (AllowPrivateAccess, BindWidget))
