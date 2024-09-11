@@ -22,7 +22,7 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 	{
 		FString NewText = Text.Replace(TEXT("\\n"), TEXT("\n"));
 
-		if (NewText.Len() > 9)
+		if (NewText.Len() > 17)
 		{
 			// Text + Text : Index 1
 
@@ -39,9 +39,13 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 		{
 			// Image + Text : Index 0
 
+			FString FirstPart = NewText.Left(8);
+			FString RemainingPart = NewText.Mid(8);
+
 			WidgetSwitcher->SetActiveWidgetIndex(0);
 			Img_Image->SetBrushFromTexture(Texture);
-			TB_Text->SetText(FText::FromString(NewText.Left(8)));
+			TB_Text_1->SetText(FText::FromString(FirstPart));
+			TB_Text_2->SetText(FText::FromString(RemainingPart));
 
 			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget-Under_8_Char"));
 		}
