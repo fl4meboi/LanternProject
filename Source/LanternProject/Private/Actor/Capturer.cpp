@@ -45,7 +45,7 @@ void ACapturer::Tick(float DeltaTime)
 UTexture2D* ACapturer::TestCapture_Implementation(AActor* Target)
 {
 	SceneCaptureComponent2D->ShowOnlyActors.Add(Target);
-	SetActorLocation(Target->GetActorLocation() + FVector(-430, 0, 160));
+	SetActorLocation(Target->GetActorLocation() + FVector(-150, 0, 70));
 	SceneCaptureComponent2D->CaptureScene();
 	SceneCaptureComponent2D->ShowOnlyActors.Remove(Target);
 	FString Base64 = ConvertTextureToBase64(SceneCaptureComponent2D->TextureTarget, TEXT("jpeg"));
@@ -63,11 +63,14 @@ void ACapturer::Capture(AActor* Target)
 	// 여기서 이미지 포맷 결정, 사용 가능한 포맷 : jpg, png
 	FString ImageFormat = TEXT("jpg");
 	SceneCaptureComponent2D->ShowOnlyActors.Add(Target);
-	SetActorLocation(Target->GetActorLocation() + FVector(-430, 0, 160));
+	SetActorLocation(Target->GetActorLocation() + FVector(-150, 0, 70));
+		UE_LOG(LogTemp, Warning, TEXT("Set capturer location"));
 	SceneCaptureComponent2D->CaptureScene();
+		UE_LOG(LogTemp, Warning, TEXT("Scene captured"));
 	SceneCaptureComponent2D->ShowOnlyActors.Remove(Target);
+		UE_LOG(LogTemp, Warning, TEXT("Show only actors"));
 	FString Base64 = ConvertTextureToBase64(SceneCaptureComponent2D->TextureTarget, ImageFormat);
-	UE_LOG(LogTemp, Warning, TEXT("Capturer jpg"));
+		
 
 	MqttManager->CallbackHTTP(Base64, ImageFormat);
 
@@ -79,6 +82,7 @@ FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const
 	if (Texture == nullptr)
 	{
 		return FString();
+			UE_LOG(LogTemp, Warning, TEXT("Texture is null. Nothing to convert"));
 	}
 
 	// TArray64<uint8> OutArray;
@@ -86,13 +90,14 @@ FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const
 	// return FBase64::Encode(OutArray.GetData(), OutArray.Num());
 	
 	FImage Image;
-	FImageUtils::GetRenderTargetImage(Texture,Image);
+	FImageUtils::GetRenderTargetImage(Texture, Image);
 	TArray64<uint8> CompressedData;
-	FImageUtils::CompressImage(CompressedData,*ImageFormat,Image);
+	FImageUtils::CompressImage(CompressedData, *ImageFormat, Image);
+		UE_LOG(LogTemp, Warning, TEXT("ConvertTexturToBase64 reached"));
 
 	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this, CompressedData, ImageFormat]()
 	{
-		if (ULanternGameInstance* GameInstance =  GetGameInstance<ULanternGameInstance>())
+		if (ULanternGameInstance* GameInstasnce = GetGameInstance<ULanternGameInstance>())
 		{
 			IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 
@@ -109,17 +114,17 @@ FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const
 				FolderName += TEXT("0");
 			}
 			FolderName += FString::FromInt(Now.GetDay());
-		
-			// UE_LOG(LogTemp, Warning, TEXT("ACapturer::ConvertTextureToBase64) %s"), *);
-		
-			FString ImagePath = GameInstance->GetFilePath() + TEXT("Screenshots/") + FolderName + TEXT("/");
 
+			// UE_LOG(LogTemp, Warning, TEXT("ACapturer::ConvertTextureToBase64) %s"), *);
+
+			FString ImagePath = GameInstasnce->GetFilePath() + TEXT("Screenshots/") + FolderName + TEXT("/");
 			// Check Directory
 			PlatformFile.CreateDirectoryTree(*ImagePath);
-		
+
 			FString ImageName = MqttManager->GetPId() + TEXT(".") + ImageFormat;
-		
+
 			FFileHelper::SaveArrayToFile(CompressedData, *(ImagePath + ImageName));
+				UE_LOG(LogTemp, Warning, TEXT("Screenshots folder created"));
 		}
 	});
 
