@@ -45,7 +45,7 @@ void ACapturer::Tick(float DeltaTime)
 UTexture2D* ACapturer::TestCapture_Implementation(AActor* Target)
 {
 	SceneCaptureComponent2D->ShowOnlyActors.Add(Target);
-	SetActorLocation(Target->GetActorLocation() + FVector(-150, 0, 70));
+	SetActorLocation(Target->GetActorLocation() + FVector(-190, 0, 70));
 	SceneCaptureComponent2D->CaptureScene();
 	SceneCaptureComponent2D->ShowOnlyActors.Remove(Target);
 	FString Base64 = ConvertTextureToBase64(SceneCaptureComponent2D->TextureTarget, TEXT("jpeg"));
@@ -63,7 +63,7 @@ void ACapturer::Capture(AActor* Target)
 	// 여기서 이미지 포맷 결정, 사용 가능한 포맷 : jpg, png
 	FString ImageFormat = TEXT("jpg");
 	SceneCaptureComponent2D->ShowOnlyActors.Add(Target);
-	SetActorLocation(Target->GetActorLocation() + FVector(-150, 0, 70));
+	SetActorLocation(Target->GetActorLocation() + FVector(-190, 0, 70));
 		UE_LOG(LogTemp, Warning, TEXT("Set capturer location"));
 	SceneCaptureComponent2D->CaptureScene();
 		UE_LOG(LogTemp, Warning, TEXT("Scene captured"));
