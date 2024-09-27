@@ -24,6 +24,8 @@ public:
 
 	void Randomize(int32 Type = -1);
 
+	void VerticalTextSet(const FString& Text, UTextBlock* TextBox1, UTextBlock* TextBox2 = nullptr, UTextBlock* TextBox3 = nullptr, UTextBlock* TextBox4 = nullptr);
+
 	void HideWidget();
 
 	void HideText();

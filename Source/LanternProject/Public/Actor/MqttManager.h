@@ -121,7 +121,6 @@ public:
 
 	void OnCallbackResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bIsConnectedSuccessfully);
 
-
 	UTexture2D* Base64ToTexture2D(const FString& Base64String, const FString& ImageFormatString);
 
 	bool HasMessage() const;

@@ -21,66 +21,36 @@ void ULanternWidget::InitWidget(UTexture2D* Texture, const FString& Text)
 	{
 		FString NewText = Text.Replace(TEXT("\\n"), TEXT("\n"));
 
-		if (Texture == nullptr)			// Case 1: no image, up to 32 char in 4 text boxes
+		if (NewText.Len() > 16 && NewText.Len() < 32)					// Case 1: Text only, up to 32 char
 		{
 			WidgetSwitcher->SetActiveWidgetIndex(1);
-
-			TB_Text_3->SetText(FText::FromString(NewText.Left(8)));		// First 8 char
-
-			if (NewText.Len() > 8)
-			{
-				TB_Text_4->SetText(FText::FromString(NewText.Mid(8, 8)));	// 9-16 char
-			}
-			else
-			{
-				TB_Text_4->SetText(FText::GetEmpty());
-			}
-
-			if (NewText.Len() > 16)
-			{
-				TB_Text_5->SetText(FText::FromString(NewText.Mid(16, 8)));		// 17-24 char
-			}
-			else
-			{
-				TB_Text_5->SetText(FText::GetEmpty());
-			}
-
-			if (NewText.Len() > 24)
-			{
-				TB_Text_6->SetText(FText::FromString(NewText.Mid(24, 8)));		// 25-32 char
-			}
-			else
-			{
-				TB_Text_6->SetText(FText::GetEmpty());
-			}
-
-			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget - No Image with up to 32 characters of text"));
+			VerticalTextSet(NewText, TB_Text_3, TB_Text_4, TB_Text_5, TB_Text_6);
+			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget - Text only, up to 32 char"));
 		}
-		else if (Text.IsEmpty())		// Case 2: upload image, no text
+		else if (Text.IsEmpty() && Texture != nullptr)				// Case 2: Image only 
 		{
 			WidgetSwitcher->SetActiveWidgetIndex(0);
 			Img_Image->SetBrushFromTexture(Texture);
-
-			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget - No text"));
+			TB_Text_1->SetText(FText::GetEmpty());
+			TB_Text_2->SetText(FText::GetEmpty());
+			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget - Image only"));
 		}
-		else							// Case 3: uploaded image, up to 16 char in 2 text boxes
+		else									// Case 3: Image + Text, up to 16 char
 		{
 			WidgetSwitcher->SetActiveWidgetIndex(0);
 			Img_Image->SetBrushFromTexture(Texture);
-
-			TB_Text_1->SetText(FText::FromString(NewText.Left(8)));		// First 8 char
-
-			if (NewText.Len() > 8)
-			{
-				TB_Text_2->SetText(FText::FromString(NewText.Mid(8, 8)));	// Next 8 char
-			}
-			else
-			{
-				TB_Text_2->SetText(FText::GetEmpty());
-			}
-
-			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget - Image with up to 16 characters of text"));
+			VerticalTextSet(NewText, TB_Text_1, TB_Text_2);
+			TB_Text_3->SetText(FText::GetEmpty());
+			TB_Text_4->SetText(FText::GetEmpty());
+			UE_LOG(LogTemp, Warning, TEXT("LanternWidget::InitWidget - Image with up to 16 char"));
 		}
+
+		if (NewText.Len() > 32)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Text is longer than 32 characters. Truncating text."));
+			NewText = NewText.Left(32); // Truncate text to 32 characters
+		}
+
 	}
 }
 
@@ -105,6 +75,38 @@ void ULanternWidget::Randomize(int32 Type)
 	case 2:
 		WidgetSwitcher->SetActiveWidgetIndex(2);
 		break;*/
+	}
+}
+
+void ULanternWidget::VerticalTextSet(const FString& Text, UTextBlock* TextBox1, UTextBlock* TextBox2, UTextBlock* TextBox3, UTextBlock* TextBox4)
+{
+	TextBox1->SetText(FText::FromString(Text.Left(8)));
+
+	if (Text.Len() > 8 && TextBox2)
+	{
+		TextBox2->SetText(FText::FromString(Text.Mid(8, 8)));
+	}
+	else if (TextBox2)
+	{
+		TextBox2->SetText(FText::GetEmpty());
+	}
+
+	if (Text.Len() > 16 && TextBox3)
+	{
+		TextBox3->SetText(FText::FromString(Text.Mid(16, 8)));
+	}
+	else if (TextBox3)
+	{
+		TextBox3->SetText(FText::GetEmpty());
+	}
+
+	if (Text.Len() > 24 && TextBox3)
+	{
+		TextBox4->SetText(FText::FromString(Text.Mid(24, 8)));
+	}
+	else if (TextBox4)
+	{
+		TextBox4->SetText(FText::GetEmpty());
 	}
 }
 

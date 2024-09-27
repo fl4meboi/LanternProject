@@ -64,11 +64,11 @@ void ACapturer::Capture(AActor* Target)
 	FString ImageFormat = TEXT("jpg");
 	SceneCaptureComponent2D->ShowOnlyActors.Add(Target);
 	SetActorLocation(Target->GetActorLocation() + FVector(-190, 0, 70));
-		UE_LOG(LogTemp, Warning, TEXT("Set capturer location"));
+		// UE_LOG(LogTemp, Warning, TEXT("Set capturer location"));
 	SceneCaptureComponent2D->CaptureScene();
-		UE_LOG(LogTemp, Warning, TEXT("Scene captured"));
+		// UE_LOG(LogTemp, Warning, TEXT("Scene captured"));
 	SceneCaptureComponent2D->ShowOnlyActors.Remove(Target);
-		UE_LOG(LogTemp, Warning, TEXT("Show only actors"));
+		// UE_LOG(LogTemp, Warning, TEXT("Show only actors"));
 	FString Base64 = ConvertTextureToBase64(SceneCaptureComponent2D->TextureTarget, ImageFormat);
 		
 
@@ -93,7 +93,7 @@ FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const
 	FImageUtils::GetRenderTargetImage(Texture, Image);
 	TArray64<uint8> CompressedData;
 	FImageUtils::CompressImage(CompressedData, *ImageFormat, Image);
-		UE_LOG(LogTemp, Warning, TEXT("ConvertTexturToBase64 reached"));
+		// UE_LOG(LogTemp, Warning, TEXT("ConvertTexturToBase64 reached"));
 
 	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this, CompressedData, ImageFormat]()
 	{
@@ -124,7 +124,7 @@ FString ACapturer::ConvertTextureToBase64(UTextureRenderTarget2D* Texture, const
 			FString ImageName = MqttManager->GetPId() + TEXT(".") + ImageFormat;
 
 			FFileHelper::SaveArrayToFile(CompressedData, *(ImagePath + ImageName));
-				UE_LOG(LogTemp, Warning, TEXT("Screenshots folder created"));
+				// UE_LOG(LogTemp, Warning, TEXT("Screenshots folder created"));
 		}
 	});
 
