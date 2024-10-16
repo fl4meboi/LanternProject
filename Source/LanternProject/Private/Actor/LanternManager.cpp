@@ -147,7 +147,7 @@ void ALanternManager::SpawnAndDestroyLantern()
 	ALanternActor* Lantern = JustSpawnLantern(nullptr, FString());
 	Lantern->Destroy();
 
-	GameInstance->LogToFile(LOGTEXT(TEXT("SpawnAndDestroyLantern")));
+	// GameInstance->LogToFile(LOGTEXT(TEXT("SpawnAndDestroyLantern")));
 }
 
 ALanternActor* ALanternManager::JustSpawnLantern(UTexture2D* Image, FString Text)
@@ -159,7 +159,7 @@ ALanternActor* ALanternManager::JustSpawnLantern(UTexture2D* Image, FString Text
 	int32 VariationIndex = FMath::RandRange(0, LanternTypeArray[TypeIndex].LanternClass.Num() - 1);
 
 	LanternTypeArray[TypeIndex].LanternWidget->InitWidget(Image, Text);
-	GameInstance->LogToFile(LOGTEXT(TEXT("LanternManager::JustSpawnLantern->InitWidget")));		// Call InitWidget 
+	// GameInstance->LogToFile(LOGTEXT(TEXT("LanternManager::JustSpawnLantern->InitWidget")));		// Call InitWidget 
 
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -191,7 +191,7 @@ void ALanternManager::SpawnLantern(UTexture2D* Image, FString Text)
 		LanternArray.Add(Lantern);
 
 		Capturer->Capture(Lantern);
-		GameInstance->LogToFile(LOGTEXT(TEXT("LanternManager->Capture")));
+		// GameInstance->LogToFile(LOGTEXT(TEXT("LanternManager->Capture")));
 	
 		if (LanternSpawnSound)
 		{

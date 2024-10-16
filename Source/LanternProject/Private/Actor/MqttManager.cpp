@@ -355,7 +355,7 @@ void AMqttManager::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr 
 
 		LanternManager->SpawnLantern(Base64ToTexture2D(DataString, ImageFormat), Text);
 
-		GameInstance->LogToFile(LOGTEXT(TEXT("mqtt requested to spawn lantern with image")));
+		// GameInstance->LogToFile(LOGTEXT(TEXT("mqtt requested to spawn lantern with image")));
 	}
 	else
 	{
@@ -472,7 +472,7 @@ void AMqttManager::RequestLanternData()
 	{
 		LanternManager->SpawnLantern(nullptr, Text);
 
-		GameInstance->LogToFile(LOGTEXT(TEXT("Mqtt requested to spawn lantern with text")));
+		// GameInstance->LogToFile(LOGTEXT(TEXT("Mqtt requested to spawn lantern with text")));
 	}
 }
 

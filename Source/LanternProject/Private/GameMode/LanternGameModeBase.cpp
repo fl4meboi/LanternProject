@@ -74,7 +74,7 @@ AActor* ALanternGameModeBase::ChoosePlayerStart_Implementation(AController* Play
 	{
 		if (PawnTypeArray[PawnTypeIndex].PlayerStart->IsValidLowLevelFast())
 		{
-			GameInstance->LogToFile(LOGTEXT(TEXT("Player Start Location : %s"), *PawnTypeArray[PawnTypeIndex].PlayerStart->GetActorLocation().ToString()));
+			// GameInstance->LogToFile(LOGTEXT(TEXT("Player Start Location : %s"), *PawnTypeArray[PawnTypeIndex].PlayerStart->GetActorLocation().ToString()));
 		}
 		else
 		{
